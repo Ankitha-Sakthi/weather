@@ -1,10 +1,11 @@
 import requests
 import smtplib
 from email.message import EmailMessage
-
 import os
 
 API_KEY = os.environ["API_KEY"]
+EMAIL = os.environ["EMAIL"]
+APP_PASSWORD = os.environ["APP_PASSWORD"]
 
 # City to monitor
 CITY = "Kollam"
@@ -13,7 +14,6 @@ CITY = "Kollam"
 url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric"
 
 response = requests.get(url)
-
 data = response.json()
 
 # Get temperature
@@ -22,15 +22,16 @@ temp = data["main"]["temp"]
 print(f"Temperature: {temp}°C")
 
 # Check temperature condition
-if temp > 35: 
+if temp > 35:
+
     print("HOT WEATHER ALERT!")
 
     # Create email
     msg = EmailMessage()
 
     msg["Subject"] = "Weather Alert"
-    msg["From"] = "weaselyronald79@gmail.com"
-    msg["To"] = "teddylawsoncrew@gmail.com"
+    msg["From"] = EMAIL
+    msg["To"] = EMAIL
 
     msg.set_content(
         f"""
@@ -48,13 +49,10 @@ Stay hydrated and take care.
         465
     )
 
-    EMAIL = os.environ["EMAIL"]
-APP_PASSWORD = os.environ["APP_PASSWORD"]
-
-server.login(
-    EMAIL,
-    APP_PASSWORD
-)
+    server.login(
+        EMAIL,
+        APP_PASSWORD
+    )
 
     server.send_message(msg)
 
