@@ -22,7 +22,7 @@ temp = data["main"]["temp"]
 print(f"Temperature: {temp}°C")
 
 # Check temperature condition
-if temp > 35:
+if temp > 20:
 
     print("HOT WEATHER ALERT!")
 
